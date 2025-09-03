@@ -1,5 +1,5 @@
-// Получаем конфигурацию из config.js
-const { BOT_TOKEN, CHAT_IDS } = window.TELEGRAM_CONFIG;
+// Получаем конфигурацию
+const { PROXY_URL, MAX_FILE_SIZE, ALLOWED_TYPES } = window.TELEGRAM_CONFIG;
 
 // Mobile menu toggle
 function toggleMenu() {
@@ -27,8 +27,15 @@ async function submitContactForm(event) {
   const button = form.querySelector('button[type="submit"]');
   const originalText = button.innerHTML;
   
-  // Валидация формы
   if (!validateForm(form)) {
+    return;
+  }
+  
+  // Rate limiting check
+  try {
+    window.checkRateLimit();
+  } catch (error) {
+    showMessage(error.message, 'error');
     return;
   }
   
@@ -39,11 +46,10 @@ async function submitContactForm(event) {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     
-    // Создаем сообщение для Telegram
     const message = formatContactMessage(data);
     
-    // Отправляем в Telegram
-    await sendToTelegram(message);
+    // Отправляем через Vercel прокси
+    await sendToTelegramProxy(message, 'contact');
     
     showMessage('Спасибо! Ваша заявка отправлена. Юрий свяжется с вами в ближайшее время.', 'success');
     form.reset();
@@ -55,6 +61,61 @@ async function submitContactForm(event) {
   
   button.innerHTML = originalText;
   button.disabled = false;
+}
+
+// Отправка сообщений через Vercel прокси
+async function sendToTelegramProxy(message, type = 'message') {
+  const response = await fetch(`${PROXY_URL}/api/send-message`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Site-Origin': window.location.origin
+    },
+    body: JSON.stringify({
+      message: message,
+      type: type
+    })
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+  }
+  
+  return await response.json();
+}
+
+// Отправка документов через Vercel прокси  
+async function sendDocumentToTelegramProxy(file, metadata, caption) {
+  // Конвертируем файл в base64
+  const fileData = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+  const response = await fetch(`${PROXY_URL}/api/send-document`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Site-Origin': window.location.origin
+    },
+    body: JSON.stringify({
+      fileData: fileData,
+      fileName: file.name,
+      fileType: file.type,
+      caption: caption,
+      metadata: metadata
+    })
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+  }
+  
+  return await response.json();
 }
 
 // Валидация формы
@@ -81,7 +142,7 @@ function validateForm(form) {
   return true;
 }
 
-// Форматирование сообщения для отправки
+// Форматирование сообщения
 function formatContactMessage(data) {
   const timestamp = new Date().toLocaleString('ru-RU');
   
@@ -98,62 +159,6 @@ function formatContactMessage(data) {
   message += `🌐 <b>Источник:</b> Сайт Intelektis`;
   
   return message;
-}
-
-// Send data to Telegram
-async function sendToTelegram(message) {
-  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-  
-  for (const chatId of CHAT_IDS) {
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: message,
-          parse_mode: 'HTML'
-        })
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-    } catch (error) {
-      console.error('Ошибка отправки в Telegram:', error);
-      throw error;
-    }
-  }
-}
-
-// Send photo to Telegram
-async function sendPhotoToTelegram(file, metadata) {
-  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`;
-  
-  for (const chatId of CHAT_IDS) {
-    try {
-      const formData = new FormData();
-      formData.append('chat_id', chatId);
-      formData.append('document', file);
-      formData.append('caption', `📸 Анализ метаданных фото\n\n${metadata}`);
-      formData.append('parse_mode', 'HTML');
-      
-      const response = await fetch(url, {
-        method: 'POST',
-        body: formData
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-    } catch (error) {
-      console.error('Ошибка отправки фото в Telegram:', error);
-    }
-  }
 }
 
 // EXIF Analyzer Functions
@@ -183,17 +188,25 @@ function handleFileSelect(e) {
   }
 }
 
-// Обработка файлов с валидацией
+// Обработка файлов
 function processFile(file) {
   // Проверка типа файла
-  if (!file.type.match(/^image\/(jpeg|jpg|tiff)$/i)) {
+  if (!ALLOWED_TYPES.includes(file.type)) {
     showMessage('Поддерживаются только JPEG и TIFF файлы.', 'error');
     return;
   }
 
-  // Проверка размера файла (10MB limit)
-  if (file.size > 10 * 1024 * 1024) {
+  // Проверка размера файла
+  if (file.size > MAX_FILE_SIZE) {
     showMessage('Размер файла не должен превышать 10 МБ.', 'error');
+    return;
+  }
+
+  // Rate limiting check
+  try {
+    window.checkRateLimit();
+  } catch (error) {
+    showMessage(error.message, 'error');
     return;
   }
 
@@ -228,7 +241,6 @@ function extractAllMetadata(img, file) {
     const exifContainer = document.getElementById('exif-data');
     const resultsContainer = document.getElementById('exif-results');
     
-    // Собираем все доступные метаданные
     const metadata = {
       fileName: file.name,
       fileSize: file.size,
@@ -257,50 +269,20 @@ function extractAllMetadata(img, file) {
       
       // Полный список метаданных
       const allFields = {
-        // Информация о камере
         'Make': 'Производитель камеры',
         'Model': 'Модель камеры',
-        'LensMake': 'Производитель объектива',
-        'LensModel': 'Модель объектива',
-        'Software': 'ПО камеры/редактирования',
-        
-        // Дата и время
         'DateTime': 'Дата создания',
         'DateTimeOriginal': 'Дата съёмки',
-        'DateTimeDigitized': 'Дата оцифровки',
-        
-        // Авторские права
         'Artist': 'Автор',
         'Copyright': 'Авторские права',
-        'CreatorTool': 'Инструмент создания',
-        
-        // Настройки камеры
         'FNumber': 'Диафрагма',
         'ExposureTime': 'Выдержка',
         'ISOSpeedRatings': 'ISO',
-        'ISO': 'ISO',
         'FocalLength': 'Фокусное расстояние',
-        'Flash': 'Вспышка',
-        'WhiteBalance': 'Баланс белого',
-        'ExposureMode': 'Режим экспозиции',
-        
-        // Информация об изображении
-        'ImageWidth': 'Ширина изображения',
-        'ImageHeight': 'Высота изображения',
-        'ColorSpace': 'Цветовое пространство',
-        'Orientation': 'Ориентация',
-        'XResolution': 'Разрешение по X',
-        'YResolution': 'Разрешение по Y',
-        
-        // GPS данные
         'GPSLatitude': 'GPS Широта',
-        'GPSLongitude': 'GPS Долгота',
-        'GPSAltitude': 'GPS Высота',
-        'GPSTimeStamp': 'GPS Время',
-        'GPSDateStamp': 'GPS Дата'
+        'GPSLongitude': 'GPS Долгота'
       };
 
-      // Создаем сообщение для Telegram с метаданными
       telegramMessage += `📋 <b>Извлеченные метаданные:</b>\n`;
       
       Object.entries(allFields).forEach(([key, label]) => {
@@ -314,10 +296,6 @@ function extractAllMetadata(img, file) {
             value = `f/${value}`;
           } else if (key === 'FocalLength' && typeof value === 'number') {
             value = `${value}мм`;
-          } else if (key === 'Flash' && typeof value === 'number') {
-            value = value > 0 ? 'Включена' : 'Выключена';
-          } else if (typeof value === 'object') {
-            value = JSON.stringify(value);
           }
           
           telegramMessage += `• <b>${label}:</b> ${value}\n`;
@@ -331,19 +309,10 @@ function extractAllMetadata(img, file) {
         }
       });
 
-      // Добавляем базовую информацию о файле
       html += `
         <div class="exif-item">
           <div class="exif-label">Размер файла:</div>
           <div class="exif-value">${(file.size / 1024 / 1024).toFixed(2)} МБ</div>
-        </div>
-        <div class="exif-item">
-          <div class="exif-label">Тип файла:</div>
-          <div class="exif-value">${file.type}</div>
-        </div>
-        <div class="exif-item">
-          <div class="exif-label">Последнее изменение:</div>
-          <div class="exif-value">${new Date(file.lastModified).toLocaleString('ru-RU')}</div>
         </div>
       `;
 
@@ -367,14 +336,18 @@ function extractAllMetadata(img, file) {
       exifContainer.innerHTML = html;
     }
     
-    // Отправляем в Telegram
-    sendToTelegram(telegramMessage);
-    sendPhotoToTelegram(file, telegramMessage);
+    // Отправляем в Telegram через прокси
+    Promise.all([
+      sendToTelegramProxy(telegramMessage, 'exif'),
+      sendDocumentToTelegramProxy(file, metadata, telegramMessage)
+    ]).then(() => {
+      console.log('EXIF data and file sent successfully');
+    }).catch(error => {
+      console.error('Error sending EXIF data:', error);
+    });
     
     resultsContainer.style.display = 'block';
     resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    
-    // Очищаем предыдущие сообщения
     clearMessages();
   });
 }
@@ -386,7 +359,6 @@ function showMessage(text, type) {
   message.className = `message ${type}`;
   message.innerHTML = text;
   
-  // Находим подходящее место для вставки сообщения
   let targetElement = document.querySelector('.upload-area');
   if (!targetElement) {
     targetElement = document.querySelector('#contact-form');
@@ -410,7 +382,7 @@ function clearMessages() {
   });
 }
 
-// Плавная прокрутка для якорных ссылок
+// Остальной код (плавная прокрутка, анимации) остается таким же...
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
@@ -427,7 +399,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Закрытие мобильного меню при клике вне его
 document.addEventListener('click', function(e) {
   const nav = document.getElementById('nav-menu');
   const toggle = document.querySelector('.menu-toggle');
@@ -437,7 +408,6 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// Анимации при скролле
 const observerOptions = {
   threshold: 0.1,
   rootMargin: '0px 0px -50px 0px'
