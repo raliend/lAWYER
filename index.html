@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html lang="ru" itemscope itemtype="http://schema.org/LegalService">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Юрист по интеллектуальной собственности в Ростове-на-Дону | Юрий – Intelektis</title>
+  <meta name="description" content="Intelektis — строгая юридическая защита интеллектуальной собственности для бизнеса, авторов и стартапов. Регистрация ТЗ, патенты, авторское право. Бесплатная консультация онлайн.">
+  <meta name="keywords" content="юрист по интеллектуальной собственности Ростов-на-Дону, регистрация товарного знака, защита авторских прав, патенты, интеллектуальная собственность, Intelektis, консультация юриста, Роспатент, IT юрист, бренды, брендинг, юридические услуги Ростов-на-Дону">
+  <meta property="og:title" content="Intelektis – Юрист по интеллектуальной собственности Ростов-на-Дону | Юрий" />
+  <meta property="og:description" content="Профессиональная регистрация и защита интеллектуальной собственности. Бесплатная консультация! Работа по всей России." />
+  <meta property="og:image" content="https://i.ibb.co/cXssZwM9/Lawyer.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://github.io/intelektis" />
+  <link rel="icon" type="image/png" href="https://i.ibb.co/C5Ymt8NB/ODIN337studio.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --main-color: #163253;
+      --accent-color: #1e4e94;
+      --text-color: #18283a;
+      --white-color: #fff;
+      --bg-gray: #f7f9fc;
+      --border-color: #e0e4ef;
+      --success: #219c62;
+      --danger: #c12c2c;
+      --shadow: 0 10px 42px rgba(22,50,83,0.08);
+      --radius: 14px;
+    }
+    html,body {
+      background:var(--bg-gray);
+      color:var(--text-color);
+      margin:0;min-width:320px;
+      font-size:18px;
+      scroll-behavior:smooth;
+    }
+    body {font-family:'Open Sans',Arial,sans-serif;}
+    .container {max-width:1140px;margin:0 auto;padding:0 16px;}
+    /* Header */
+    header {
+      background:var(--white-color);
+      border-bottom: 2px solid var(--border-color);
+      padding:22px 0 12px 0;
+      position: sticky; top: 0; z-index: 1020; box-shadow: 0 2px 16px rgba(30,78,148,.04);
+    }
+    .header-content {display:flex;align-items:center;justify-content:space-between;}
+    .logo {
+      display:flex;align-items:center;gap:14px;
+      font-family:'Montserrat',sans-serif;font-size:1.32rem;font-weight:700;color:var(--main-color);letter-spacing:0.8px;
+    }
+    .logo-img {height:32px;border-radius:7px;}
+    nav ul {list-style:none;display:flex;gap:28px;padding:0;margin:0;}
+    nav a {
+      color:var(--main-color);font-weight:600;font-family:'Montserrat',sans-serif;text-decoration:none;transition:.21s;position:relative;
+    }
+    nav a::after {
+      content:"";display:block;width:0;height:2px;background:var(--accent-color);transition:.23s;position:absolute;left:0;bottom:-2px;
+    }
+    nav a:hover::after {width:100%;}
+    nav a:hover {color:var(--accent-color);}
+    /* HERO */
+    .hero {display:flex;align-items:center;justify-content:space-between;gap:44px;background:var(--white-color);margin-top:37px;padding:56px 34px 44px 40px;border-radius:var(--radius);box-shadow:var(--shadow);min-height:350px;overflow:hidden;}
+    .hero-text {max-width:540px;}
+    .hero h1 {font-family:'Montserrat',sans-serif;color:var(--main-color);font-size:2.1rem;font-weight:700;margin:0 0 18px 0;}
+    .hero h2 {font-family:'Montserrat',sans-serif;color:var(--accent-color);margin:0 0 17px 0;font-size:1.13rem;font-weight:600;}
+    .hero p {font-size:1.03rem;margin-bottom:25px;line-height:1.62;}
+    .hero-cta {display:flex;gap:18px;margin-top:10px;}
+    .btn {padding:13px 26px; border-radius:9px;font-weight:700;font-family:'Montserrat',sans-serif;font-size:1rem;color:var(--white-color);background:linear-gradient(90deg,var(--main-color),var(--accent-color));border:none;cursor:pointer;transition:.17s;border:2px solid transparent;box-shadow:0 3px 12px rgba(30,78,148,0.05);display:inline-flex;align-items:center;gap:10px;text-decoration:none;}
+    .btn:hover {background:linear-gradient(90deg,var(--accent-color),var(--main-color));box-shadow:0 6px 18px rgba(30,78,148,0.13);}
+    .btn-secondary {
+      background:var(--white-color);
+      color:var(--main-color);
+      border:2px solid var(--main-color);
+    }
+    .btn-secondary:hover {background:var(--main-color);color:var(--white-color);}
+    .hero-photo {max-width:300px;width:100%;border-radius:18px;box-shadow:0 5px 22px rgba(22,50,83,0.10);}
+    @media(max-width:900px){.hero{flex-direction:column;gap:32px;text-align:center;padding:32px 4vw 26px 4vw;}.hero-photo{margin:0 auto;}}
+    /* Blocks */
+    section {background:var(--white-color);margin:36px 0;padding:44px 0 38px 0;border-radius:var(--radius);box-shadow:0 4px 16px rgba(22,50,83,.050);}
+    section h3 {text-align:center;color:var(--main-color);font-size:1.25rem;margin:0 0 2.1rem 0;font-family:'Montserrat',sans-serif;}
+    /* Services */
+    .services-list {display:flex;gap:22px;flex-wrap:wrap;justify-content:center;}
+    .service-card{flex:1 1 232px;min-width:200px;max-width:300px;background:var(--bg-gray);border-radius:13px;padding:30px 18px 22px 18px;box-shadow:0 2px 8px rgba(22,50,83,.04);margin-bottom:16px;text-align:center;transition:.19s;}
+    .service-card:hover{background: #e6eefd;transform:translateY(-3px);border:1.2px solid var(--accent-color);}
+    .service-card .icon{font-size:2.5rem;margin-bottom:13px;color:var(--accent-color);}
+    .service-card h4{margin:0 0 10px 0;color:var(--main-color);font-family:'Montserrat',sans-serif;}
+    .service-card p{font-size:.98rem;color:#333;}
+    /* Benefits */
+    .benefits-list {display:flex;gap:19px;flex-wrap:wrap;justify-content:center;}
+    .benefit-item {flex:1 1 240px;min-width:180px;max-width:320px;background:var(--bg-gray);padding:23px 15px 17px 15px;border-radius:12px;text-align:center;box-shadow:0 1px 6px rgba(30,78,148,0.07);font-size:1.01rem;transition:.15s;border-left:5px solid var(--accent-color);}
+    .benefit-item .fa-solid{margin-bottom:8px;color:var(--accent-color);font-size:1.5rem;}
+    /* Steps */
+    .steps-list {display:flex;flex-direction:column;gap:17px;align-items:center;}
+    .step-item {display:flex;align-items:flex-start;gap:17px;background:var(--bg-gray);border-radius:9px;padding:17px 12px 17px 18px;box-shadow:0 1px 8px rgba(30,78,148,0.05);width:99%;max-width:600px;}
+    .step-num {flex-shrink:0;width:32px;height:32px;background:var(--main-color);color:var(--white-color);font-family:'Montserrat',sans-serif;font-size:1.03rem;display:flex;align-items:center;justify-content:center;border-radius:50%;font-weight:600;}
+    /* Audiences */
+    .audiences-list {display:flex;gap:17px;flex-wrap:wrap;justify-content:center;}
+    .audience-item {flex:1 1 200px;min-width:160px;max-width:250px;background:var(--bg-gray);padding:18px 13px;border-radius:11px;text-align:center;box-shadow:0 1px 5px rgba(30,78,148,.04);font-size:.98rem;}
+    .audience-item .fa-solid{font-size:2.3rem;color:var(--accent-color);margin-bottom:7px;}
+    /* Reviews */
+    .reviews-list {display:flex;gap:17px;flex-wrap:wrap;justify-content:center;}
+    .review-card {flex:1 1 260px;min-width:180px;max-width:320px;background:var(--bg-gray);border-radius:9px;padding:19px 17px 7px 17px;box-shadow:0 1px 5px rgba(30,78,148,0.04);font-size:.98rem;position:relative;}
+    .review-author {margin:13px 0 2px 0;font-weight:700;color:var(--main-color);}
+    .review-quote {font-style:italic;color:#38507b;}
+    /* FAQ */
+    .faq-list {max-width:680px;margin:0 auto;}
+    .faq-item {margin-bottom:11px;border-radius:9px;border:1.2px solid var(--border-color);overflow:hidden;}
+    .faq-q {background:var(--bg-gray);padding:18px;font-family:'Montserrat',sans-serif;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:12px;}
+    .faq-a {padding:18px;display:none;color:#314151;}
+    .faq-a.show {display:block;}
+    /* Contact */
+    .contact-flex {display:flex;gap:60px;flex-wrap:wrap;justify-content:space-between;align-items:center;}
+    .contact-info {min-width:210px;font-size:1.04rem;line-height:1.6;}
+    .contact-info b {font-family:'Montserrat',sans-serif;color:var(--main-color);font-weight:700;}
+    .contact-block a {color:var(--accent-color);text-decoration:none;transition:.15s;}
+    .contact-block a:hover {color:var(--main-color);text-decoration:underline;}
+    .feedback-form {min-width:240px;max-width:340px;background:var(--bg-gray);padding:16px 13px;border-radius:16px;box-shadow:0 1px 6px rgba(30,78,148,0.04);display:flex;flex-direction:column;gap:10px;}
+    .feedback-form input, .feedback-form textarea {width:100%;padding:9px 10px;border:1.3px solid var(--border-color);border-radius:7px;font-size:1rem;}
+    .feedback-form textarea{resize:vertical;min-height:48px;}
+    .feedback-form label[for=consent]{font-size:.96rem;display:flex;align-items:center;gap:6px;}
+    .feedback-form button{margin-top:9px;}
+    .map {width:100%;height:210px;border-radius:10px;margin:19px 0 7px 0;}
+    /* Footer strict */
+    footer {background:var(--white-color);border-top:2px solid var(--border-color);padding:23px 0 23px 0;margin-top:33px;text-align:center;}
+    .footer-dev-area {display:flex;flex-direction:column;align-items:center;gap:5px;}
+    .footer-logo {display:flex;align-items:center;gap:12px;margin-bottom:0;}
+    .footer-logo img{height:32px;border-radius:7px;}
+    .footer-dev {font-size:.98rem;color:#747e91;opacity:0.98;}
+    @media(max-width:900px){.container{padding:0 3vw;}.contact-flex{flex-direction:column;gap:33px}.services-list,.benefits-list,.audiences-list,.reviews-list{flex-direction:column;gap:9px}.hero{flex-direction:column;gap:22px;text-align:center;padding:26px 0 23px 0;}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <div class="logo"><img class="logo-img" src="https://i.ibb.co/C5Ymt8NB/ODIN337studio.png" alt="Логотип ODIN337">Intelektis</div>
+      <nav>
+        <ul>
+          <li><a href="#services">Услуги</a></li>
+          <li><a href="#benefits">Преимущества</a></li>
+          <li><a href="#steps">Этапы</a></li>
+          <li><a href="#reviews">Отзывы</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Юрист по интеллектуальной собственности в Ростове-на-Дону | Юрий – Intelektis</h1>
+        <h2><i class="fa-solid fa-certificate"></i> Ваша интеллектуальная собственность — под профессиональной защитой</h2>
+        <p>Intelektis — строгая защита патентов, брендов, авторских прав, сопровождение и регистрация ТЗ. Для бизнеса, стартапа, креаторов и частных лиц. Первая консультация — бесплатно.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#contacts"><i class="fa-solid fa-headset"></i> Оставить заявку</a>
+          <a class="btn btn-secondary" href="#services"><i class="fa-solid fa-shield-halved"></i> Проверить знак</a>
+        </div>
+      </div>
+      <img class="hero-photo" src="https://i.ibb.co/cXssZwM9/Lawyer.png" alt="защита интеллектуальной собственности ростов-на-дону юрист Юрий" title="Юрист Юрий Intelektis">
+    </section>
+    <!-- SERVICES -->
+    <section id="services">
+      <h3>Комплексная защита ИС</h3>
+      <div class="services-list">
+        <div class="service-card"><span class="icon fa-solid fa-trademark"></span><h4>Товарные знаки</h4><p>Регистрация, сопровождение, досудебная и судебная защита.</p></div>
+        <div class="service-card"><span class="icon fa-solid fa-lightbulb"></span><h4>Патенты и изобретения</h4><p>Оформление патентов и патентный аудит с экспертной защитой.</p></div>
+        <div class="service-card"><span class="icon fa-solid fa-copyright"></span><h4>Авторское право</h4><p>Правовая охрана произведений, дизайна, IT-продуктов.</p></div>
+        <div class="service-card"><span class="icon fa-solid fa-scale-balanced"></span><h4>Судебная защита</h4><p>Претензионная и судовая работа — от предупреждения к компенсации.</p></div>
+        <div class="service-card"><span class="icon fa-solid fa-search"></span><h4>Аудит ИС & Due Diligence</h4><p>Проверка объекта ИС, анализа рисков, финансовый и юридический дайджест.</p></div>
+      </div>
+    </section>
+    <!-- BENEFITS -->
+    <section id="benefits">
+      <h3>Преимущества работы с Intelektis</h3>
+      <div class="benefits-list">
+        <div class="benefit-item"><i class="fa-solid fa-user-tie"></i><div>Эксперт Юрий с 15+ лет в отрасли</div></div>
+        <div class="benefit-item"><i class="fa-solid fa-list-check"></i><div>500+ зарегистрированных объектов и выигранных дел</div></div>
+        <div class="benefit-item"><i class="fa-solid fa-globe"></i><div>Дистанционные услуги и очное сопровождение</div></div>
+        <div class="benefit-item"><i class="fa-solid fa-chart-line"></i><div>Прозрачная стоимость и фиксированные сроки</div></div>
+        <div class="benefit-item"><i class="fa-solid fa-user-shield"></i><div>Персональное юридическое ведение каждого проекта</div></div>
+        <div class="benefit-item"><i class="fa-solid fa-gavel"></i><div>Высокие шансы успешного решения вопроса</div></div>
+      </div>
+    </section>
+    <!-- STEPS -->
+    <section id="steps">
+      <h3>Как проходит работа</h3>
+      <div class="steps-list">
+        <div class="step-item"><span class="step-num">1</span>Первая консультация (онлайн/офис)</div>
+        <div class="step-item"><span class="step-num">2</span>Разработка стратегии и заключение договора</div>
+        <div class="step-item"><span class="step-num">3</span>Документальное оформление и подача заявок или исков</div>
+        <div class="step-item"><span class="step-num">4</span>Юридическое сопровождение на всех этапах</div>
+        <div class="step-item"><span class="step-num">5</span>Результат: защита и поддержка объекта ИС</div>
+      </div>
+    </section>
+    <!-- AUDIENCES -->
+    <section id="audiences">
+      <h3>Для кого Intelektis?</h3>
+      <div class="audiences-list">
+        <div class="audience-item"><i class="fa-solid fa-briefcase"></i><div>Бизнес и бренды</div></div>
+        <div class="audience-item"><i class="fa-solid fa-rocket"></i><div>Стартапы и IT-компании</div></div>
+        <div class="audience-item"><i class="fa-solid fa-feather"></i><div>Авторы, фотографы, дизайнеры</div></div>
+        <div class="audience-item"><i class="fa-solid fa-lightbulb"></i><div>Изобретатели</div></div>
+        <div class="audience-item"><i class="fa-solid fa-pen-nib"></i><div>Юридические лица & фрилансеры</div></div>
+      </div>
+    </section>
+    <!-- REVIEWS -->
+    <section id="reviews">
+      <h3>Отзывы клиентов</h3>
+      <div class="reviews-list">
+        <div class="review-card"><span class="review-quote">“Все максимально четко, знак зарегистрирован быстро несмотря на сложности. Спасибо!”</span><div class="review-author">Инна М.</div></div>
+        <div class="review-card"><span class="review-quote">“Юрий вел патентное сопровождение для стартапа: выиграли суд, получили компенсацию.”</span><div class="review-author">Константин П.</div></div>
+        <div class="review-card"><span class="review-quote">“Подал заявку удалённо — всё оформлено от и до, коммуникация всегда на уровне.”</span><div class="review-author">Алексей К.</div></div>
+      </div>
+    </section>
+    <!-- FAQ -->
+    <section id="faq">
+      <h3>Часто задаваемые вопросы</h3>
+      <div class="faq-list">
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><i class="fa-solid fa-question-circle"></i> Сколько длится регистрация ТЗ?</div><div class="faq-a">8–12 месяцев, подробности зависят от специфики объекта.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><i class="fa-solid fa-money-bill-wave"></i> Сколько стоит консультация?</div><div class="faq-a">Первая консультация — бесплатно, цены фиксированы.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><i class="fa-solid fa-laptop"></i> Можно ли работать дистанционно?</div><div class="faq-a">Да, 90% клиентов работают онлайн: все документы и сопровождение удалённо.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><i class="fa-solid fa-scale-balanced"></i> Как проходит защита через суд?</div><div class="faq-a">Анализ, претензия, исковое заявление — дальнейшее сопровождение до взыскания компенсации.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><i class="fa-solid fa-envelope"></i> Что нужно для начала?</div><div class="faq-a">Описать объект защиты, предоставить контакты и согласовать детали на консультации.</div></div>
+      </div>
+    </section>
+    <!-- CONTACTS -->
+    <section id="contacts">
+      <h3>Контакты</h3>
+      <div class="contact-flex">
+        <div class="contact-block contact-info">
+          <b>Юридическая компания:</b> Intelektis<br>
+          <b>Юрист:</b> Юрий<br>
+          <b>Email:</b> <a href="mailto:mybox2501@gmail.com">mybox2501@gmail.com</a><br>
+          <b>Telegram:</b> <a href="https://t.me/myboxinfo" rel="noopener">myboxinfo</a><br>
+          <b>Адрес:</b> Ростов-на-Дону, вся Россия<br>
+          <b>Время работы:</b> Пн–Пт 09:00–18:00, Сб 10:00–15:00
+        </div>
+        <form class="feedback-form" onsubmit="submitForm(event)">
+          <input name="name" type="text" placeholder="Ваше имя" required minlength="2" autocomplete="name">
+          <input name="phone" type="tel" placeholder="Телефон" required autocomplete="tel">
+          <input name="email" type="email" placeholder="Email (необязательно)" autocomplete="email">
+          <textarea name="comment" placeholder="Ваш вопрос" required></textarea>
+          <label for="consent"><input type="checkbox" id="consent" required> Согласен на обработку данных</label>
+          <button class="btn" type="submit"><i class="fa-regular fa-paper-plane"></i> Оставить заявку</button>
+        </form>
+      </div>
+      <div class="map">
+        <iframe class="map" src="https://yandex.ru/map-widget/v1/?um=constructor%3A9fbc200ebfdb836f80d8a4618e2296f911e513acd1d7192a4125008954cabf1f&amp;source=constructor" frameborder="0" title="Карта офиса Intelektis" aria-label="Карта Intelektis"></iframe>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-dev-area">
+   <div class="footer-logo">
+          <a href="https://t.me/ODIN337" target="_blank" rel="noopener">
+            <img src="https://i.ibb.co/C5Ymt8NB/ODIN337studio.png" alt="Логотип студии ODIN337" title="ODIN337.studio">
+          </a>
+          <span>ODIN337.studio</span>
+    </div>
+  </footer>
+  <script>
+    function toggleFaq(el){
+      const answer = el.nextElementSibling,
+            active = answer.classList.contains('show');
+      document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('show'));
+      if (!active) answer.classList.add('show');
+    }
+    function submitForm(event){
+      event.preventDefault();
+      alert('Спасибо! Юрий свяжется с вами в ближайшее время.');
+      event.target.reset();
+    }
+  </script>
+</body>
+</html>
