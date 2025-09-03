@@ -1,16 +1,6 @@
-// Конфигурация для работы с Telegram Bot
-
-let TELEGRAM_CONFIG = {};
-
-// Проверяем доступность переменных окружения
-if (typeof process !== 'undefined' && process.env) {
-  // Node.js окружение (для сборки)
-  TELEGRAM_CONFIG = {
-    BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN,
-    CHAT_IDS: [process.env.TELEGRAM_CHAT_ID_1, process.env.TELEGRAM_CHAT_ID_2].filter(Boolean)
-  };
-} 
-}
-
-// Экспортируем конфигурацию
-window.TELEGRAM_CONFIG = TELEGRAM_CONFIG;
+window.TELEGRAM_CONFIG = {
+  BOT_TOKEN: 'dev-token-here',
+  CHAT_IDS: ['dev-chat-1', 'dev-chat-2'],
+  MAX_FILE_SIZE: 10 * 1024 * 1024,
+  ALLOWED_TYPES: ['image/jpeg', 'image/jpg', 'image/tiff']
+};
